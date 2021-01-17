@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { printHello } from './actions/actions';
 
-function App() {
+function App({ data, printHello }) {
   const [inputValue, setInputValue] = useState('');
 
   return (
@@ -11,22 +11,18 @@ function App() {
         value={inputValue}
         onChange={(e) => setInputValue(e.currentTarget.value)}
       />
-      <button onClick={() => console.log('a')}>Click</button>
+      <button onClick={() => printHello(inputValue)}>Click</button>
+      <div>{data}</div>
     </>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    count: state.counter.count,
-  }
-}
+const mapStateToProps = (store) => {
+  return { data: store.todo.data };
+};
 
-const mapDispatchToProps = dispatch => {
-  return {
-    printHello: () => dispatch(printHello()),
+const mapDispatchToProps = (dispatch) => {
+  return { printHello: (payload) => dispatch(printHello(payload))};
+};
 
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

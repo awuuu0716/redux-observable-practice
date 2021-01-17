@@ -1,5 +1,5 @@
 const defaultState = {
-  data: '',
+  data: 'World',
 };
 
 function reducer(state = defaultState, action) {
