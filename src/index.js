@@ -2,11 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
-import { createStore,combineReducers } from 'redux';
-import reducer from './reducers/reducer';
+import configureStore from './redux/store';
 
-const rootReducer = combineReducers({todo:reducer})
-const store = createStore(rootReducer);
+const store = configureStore()
 
 ReactDOM.render(
   <Provider store={store}>

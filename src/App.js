@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { printHello } from './actions/actions';
+import { clickBtnA } from './redux/actions';
 
-function App({ data, printHello }) {
-  const [inputValue, setInputValue] = useState('');
+function App({ data, clickBtnA }) {
 
   return (
     <>
-      <input
-        value={inputValue}
-        onChange={(e) => setInputValue(e.currentTarget.value)}
-      />
-      <button onClick={() => printHello(inputValue)}>Click</button>
+      <button onClick={() => clickBtnA()}>Button A</button>
       <div>{data}</div>
     </>
   );
@@ -22,7 +17,7 @@ const mapStateToProps = (store) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { printHello: (payload) => dispatch(printHello(payload))};
+  return { clickBtnA: () => dispatch(clickBtnA())};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
