@@ -6,7 +6,7 @@ import {rootEpic} from './epics'
 
 const epicMiddleware = createEpicMiddleware();
 
-const rootReducer = combineReducers({todo:reducer})
+const rootReducer = combineReducers({test:reducer})
 
 export default function configureStore() {
   const store = createStore(

@@ -1,14 +1,41 @@
-import { Observable } from 'rxjs';
+import { of, concat } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 import { combineEpics, ofType } from 'redux-observable';
-import { printHello } from './actions';
-import { delay, mapTo } from 'rxjs/operators';
+import { switchMap, map, filter, mergeMap } from 'rxjs/operators';
+import { printUrl, updateMessage, updateIsBtnAClicked } from './actions';
 import types from './types';
 
-const testEpic = (action$) =>
+const apiEpic = (action$) =>
   action$.pipe(
-    ofType(types.CLICK_BTN_A),
-    delay(2000),
-    mapTo({ type: types.PRINT_HELLO })
+    ofType(types.GET_NEW_PIC),
+    switchMap(() =>
+      ajax('https://api.thecatapi.com/v1/images/search').pipe(
+        map(({ response }) => printUrl(response[0].url))
+      )
+    )
   );
 
-export const rootEpic = combineEpics(testEpic);
+const AEpic = (action$) =>
+  action$.pipe(
+    ofType(types.CLICK_BTN_A),
+    mergeMap(() =>
+      concat(
+        of(updateMessage('Button B is ready!')),
+        of(updateIsBtnAClicked(true))
+      )
+    )
+  );
+
+const testEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.CLICK_BTN_B),
+    filter(() => state$.value.test.isBtnAClicked),
+    mergeMap(() =>
+      concat(
+        of(updateMessage('Button B is clicked!')),
+        of(updateIsBtnAClicked(false))
+      )
+    )
+  );
+
+export const rootEpic = combineEpics(apiEpic, AEpic, testEpic);

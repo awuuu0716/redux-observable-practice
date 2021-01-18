@@ -2,19 +2,39 @@ import types from './types';
 
 export const clickBtnA = () => {
   return {
-    type: types.CLICK_BTN_A
-  }
-}
+    type: types.CLICK_BTN_A,
+  };
+};
 
 export const clickBtnB = () => {
   return {
-    type: types.CLICK_BTN_B
-  }
-}
+    type: types.CLICK_BTN_B,
+  };
+};
 
-export const printHello = (payload) => {
+export const callApi = () => {
   return {
-    type: types.PRINT_HELLO,
-    payload: payload,
+    type: types.GET_NEW_PIC,
+  };
+};
+
+export const printUrl = (payload) => {
+  return {
+    type: types.PRINT_PIC,
+    payload,
+  };
+};
+
+export const updateMessage = (payload) => {
+  return {
+    type: types.UPDATE_MESSAGE,
+    payload,
+  };
+};
+
+export const updateIsBtnAClicked = (payload) => {
+  return {
+    type: types.UPDATE_BUTTON_STATE,
+    payload,
   };
 };
